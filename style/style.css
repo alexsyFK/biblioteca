@@ -1,0 +1,79 @@
+ /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 600px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+    
+    #menuHome{
+        /*class="active"*/
+        background: black;
+        
+    }
+    
+    #editarUsuario{
+        font-size: 25px;                
+    }
+    
+    #editarUsuario:hover{
+        font-size: 40px;                
+    }
+    
+    #removerUsuario{
+        font-size: 25px;
+        border-radius: 100%;
+        padding: 0;
+    }
+        
+    #removerUsuario:hover{
+        font-size: 40px;  
+        
+    }
+    
+    footer{
+        margin-bottom: 0;
+    }
+    
+    #rodape{
+        width: 100%;
+        height: 50px;
+        background: green;
+        bottom: 2px;
+    }
+    
+    #imgGATEIIlogo{
+    
+    }
+    
+    #tituloHome{
+        text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        font-size: 55px;
+        font-family: initial;
+    }
+    
+    
