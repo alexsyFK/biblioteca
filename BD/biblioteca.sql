@@ -1,0 +1,154 @@
+CREATE TABLE TipoUsuario (
+idTipoUsuario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Tipo VARCHAR(20) NOT NULL,
+PRIMARY KEY(idTipoUsuario)
+);
+CREATE TABLE Usuario (
+idUsuario INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+TipoUsuario_idTipoUsuario INTEGER UNSIGNED NOT NULL,
+Nome VARCHAR(100) NOT NULL,
+CPF VARCHAR(14) NOT NULL,
+Senha VARCHAR(32) NOT NULL,
+PRIMARY KEY(idUsuario),
+INDEX Usuario_FKIndex1(TipoUsuario_idTipoUsuario)
+);
+CREATE TABLE Email (
+idEmail INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+Email VARCHAR(100) NOT NULL,
+PRIMARY KEY(idEmail),
+INDEX Email_FKIndex1(Usuario_idUsuario)
+);
+CREATE TABLE TipoTelefone (
+idTipoTelefone INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Tipo VARCHAR(20) NOT NULL,
+PRIMARY KEY(idTipoTelefone)
+);
+CREATE TABLE Telefone (
+idTelefone INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+TipoTelefone_idTipoTelefone INTEGER UNSIGNED NOT NULL,
+Telefone VARCHAR(13) NOT NULL,
+PRIMARY KEY(idTelefone),
+INDEX Telefone_FKIndex1(TipoTelefone_idTipoTelefone),
+INDEX Telefone_FKIndex2(Usuario_idUsuario)
+);
+CREATE TABLE Logradouro (
+idLogradouro INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Rua VARCHAR(80) NOT NULL,
+CEP VARCHAR(9) NOT NULL,
+PRIMARY KEY(idLogradouro)
+);
+CREATE TABLE Estado (
+idEstado INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Estado VARCHAR(2) NOT NULL,
+PRIMARY KEY(idEstado)
+);
+CREATE TABLE Cidade (
+idCidade INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Estado_idEstado INTEGER UNSIGNED NOT NULL,
+Cidade VARCHAR(40) NOT NULL,
+PRIMARY KEY(idCidade),
+INDEX Cidade_FKIndex1(Estado_idEstado)
+);
+CREATE TABLE Endereco (
+idEndereco INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Logradouro_idLogradouro INTEGER UNSIGNED NOT NULL,
+Cidade_idCidade INTEGER UNSIGNED NOT NULL,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+Numero INTEGER UNSIGNED NOT NULL,
+Complemento VARCHAR(50) NULL,
+Bairro VARCHAR(50) NOT NULL,
+PRIMARY KEY(idEndereco),
+INDEX Endereco_FKIndex1(Usuario_idUsuario),
+INDEX Endereco_FKIndex2(Cidade_idCidade),
+INDEX Endereco_FKIndex3(Logradouro_idLogradouro)
+);
+CREATE TABLE Editora (
+idEditora INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Editora VARCHAR(50) NOT NULL,
+PRIMARY KEY(idEditora)
+);
+CREATE TABLE Livro (
+idLivro INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Editora_idEditora INTEGER UNSIGNED NOT NULL,
+Titulo VARCHAR(80) NOT NULL,
+Ano YEAR NOT NULL,
+Edicao INTEGER UNSIGNED NOT NULL,
+PRIMARY KEY(idLivro),
+INDEX Livro_FKIndex1(Editora_idEditora)
+);
+CREATE TABLE Autor (
+idAutor INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Nome VARCHAR(100) NOT NULL,
+PRIMARY KEY(idAutor)
+);
+CREATE TABLE LivroAutor (
+idLivroAutor INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Autor_idAutor INTEGER UNSIGNED NOT NULL,
+Livro_idLivro INTEGER UNSIGNED NOT NULL,
+PRIMARY KEY(idLivroAutor, Autor_idAutor, Livro_idLivro),
+INDEX LivroAutor_FKIndex1(Livro_idLivro),
+INDEX LivroAutor_FKIndex2(Autor_idAutor)
+);
+CREATE TABLE Favorito (
+idFavorito INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+Livro_idLivro INTEGER UNSIGNED NOT NULL,
+PRIMARY KEY(idFavorito),
+INDEX Favorito_FKIndex1(Livro_idLivro),
+INDEX Favorito_FKIndex2(Usuario_idUsuario)
+);
+CREATE TABLE Reserva (
+idReserva INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+Livro_idLivro INTEGER UNSIGNED NOT NULL,
+Emprestimo_idEmprestimo INTEGER UNSIGNED NULL,
+Data_Reserva DATE NOT NULL,
+Data_Limite DATE NULL,
+PRIMARY KEY(idReserva),
+INDEX Reserva_FKIndex1(Livro_idLivro),
+INDEX Reserva_FKIndex2(Usuario_idUsuario),
+INDEX Reserva_FKIndex3(Emprestimo_idEmprestimo)
+);
+CREATE TABLE Emprestimo (
+idEmprestimo INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+Livro_idLivro INTEGER UNSIGNED NOT NULL,
+Reserva_idReserva INTEGER UNSIGNED NULL,
+Data_Emprestimo DATE NOT NULL,
+Data_Previsao DATE NOT NULL,
+Data_Devolucao DATE NULL,
+Multa VARCHAR(10) NULL,
+Observacao VARCHAR(255) NULL,
+PRIMARY KEY(idEmprestimo),
+INDEX Emprestimo_FKIndex1(Livro_idLivro),
+INDEX Emprestimo_FKIndex2(Usuario_idUsuario),
+INDEX Emprestimo_FKIndex3(Reserva_idReserva)
+);
+CREATE TABLE TipoAlerta (
+idTipoAlerta INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Tipo VARCHAR(20) NOT NULL,
+PRIMARY KEY(idTipoAlerta)
+);
+CREATE TABLE Alerta (
+idAlerta INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+TipoAlerta_idTipoAlerta INTEGER UNSIGNED NOT NULL,
+Usuario_idUsuario INTEGER UNSIGNED NOT NULL,
+Titulo VARCHAR(20) NOT NULL,
+Mensagem VARCHAR(160) NOT NULL,
+Data_Agendada DATE NOT NULL,
+Horario_Agendado VARCHAR(4) NOT NULL,
+PRIMARY KEY(idAlerta),
+INDEX Alerta_FKIndex1(Usuario_idUsuario),
+INDEX Alerta_FKIndex2(TipoAlerta_idTipoAlerta)
+);
+CREATE TABLE Envio (
+idEnvio INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+Alerta_idAlerta INTEGER UNSIGNED NOT NULL,
+Data_Envio DATE NOT NULL,
+Horario_Envio VARCHAR(4) NOT NULL,
+Status VARCHAR(50) NOT NULL,
+PRIMARY KEY(idEnvio),
+INDEX Envio_FKIndex1(Alerta_idAlerta)
+);

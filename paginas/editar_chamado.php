@@ -146,8 +146,6 @@
             </div>
         </div>
 
-        <footer class="container-fluid text-center">
-            <p>AJB</p>
-        </footer>                           
+                               
     </body>
 </html>
