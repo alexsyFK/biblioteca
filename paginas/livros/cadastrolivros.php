@@ -3,17 +3,20 @@
     <head>
         <title>Cadastro de Usuários</title>
         <meta charset="UTF-8">
-        <script src="../lib/jquery-3.1.1.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="../lib/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="../style/style.css">
+        <script src="../../lib/jquery-3.1.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="../../lib/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../style/style.css">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="../lib/bootstrap.min.js"></script>
-    </head>
+        <script src="../../lib/bootstrap.min.js"></script>
     <body>
         <?php
-        include_once './tema.php';
-        echo getNav();
+        include_once '../../lib/componentesPagina.php';
+      $opcoesDoMenu = '<li><a href="../home/index.php">Home</a></li>
+                    <li><a href="../usuarios/usuarios.php">Usuários</a></li>                    
+                    <li><a href="../livros/cadastrolivros.php">Cadastrar de Livros</a></li>
+                    <li><a href="../livros/consultalivros.php">Consultar Livros</a></li>';
+        echo getNav($opcoesDoMenu);
         ?>
         <div class="container-fluid text-center">
             <div class="row content">
@@ -70,30 +73,28 @@
             </div>
         </div>
 
-        <?php
-        //Conexo com banco de dados
-        include_once "../lib/utilitariosBD.php";
-        if ($_POST != NULL) {
+        <?php       
+        
+        if (isset($_POST["cadastrar_usuario"])) {
+            //Conexo com banco de dados
+            include_once '../../lib/utilitariosBD.php';
             $nomeusuario = $_POST["nomeusuario"];
             $CPF = $_POST["CPF"];
-            $tipou_usuario = $_POST["tipou_usuario"];
+            $tipo_usuario = $_POST["tipou_usuario"];
             $senha = $_POST["senha"];
 
-            $sql = "INSERT INTO Usuario(TipoUsuario_idTipoUsuario, Nome, CPF, Senha) VALUES ('$tipou_usuario', '$nomeusuario', '$CPF', '$senha');";
-
-            $con = getConecxaoDB();
-            $retorno = $con->query($sql);
-
+            $retorno = insertUsuario($tipo_usuario, $nomeusuario, $CPF, $senha);
+            
             if ($retorno) {
-                echo "<script>alert('Usuário {$nomeusuario} cadastrado com sucesso!');location.href = 'chamados.php?filtro=$codigoEquipamento';</script>";                
+                echo "<script>alert('Usuário {$nomeusuario} cadastrado com sucesso!');location.href = 'usuarios.php?filtro={$idUsuario}';</script>";
             } else {
                 echo "<script>alert('Erro ao abrir chamado!');</script>";
-            }
+            }       
 
-            /*while ($registro = $retorno->fetch_array()) {
-                $idTipoUsuario = $registro["idTipoUsuario"];
-                echo $idTipoUsuario . "---------------------------------------";
-            }*/
+            /* while ($registro = $retorno->fetch_array()) {
+              $idTipoUsuario = $registro["idTipoUsuario"];
+              echo $idTipoUsuario . "---------------------------------------";
+              } */
         }
         echo getRodape();
         ?>        

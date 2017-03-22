@@ -1,6 +1,6 @@
 <?php
 
-function getNav(){
+function getNav($menu){    
 return '<nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -9,14 +9,11 @@ return '<nav class="navbar navbar-inverse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <img class="navbar-brand" src="../img/GATEIIlogo.png"/>
+                <img class="navbar-brand" src="../../img/GATEIIlogo.png"/>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="home.php">Home</a></li>
-                    <li><a href="cadastrousuarios.php">Cadastro de Usuários</a></li>
-                    <li><a href="cadastrolivros.php">Cadastro de Livros</a></li>
-                    <li><a href="consultalivros.php">Consultar Livros</a></li>
+                '.$menu.'                    
                 </ul>
                 <ul class="nav navbar-nav navbar-right">                        
 
